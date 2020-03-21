@@ -15,7 +15,8 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
-const ERROR = "ERROR";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   // console.log(props);
@@ -23,28 +24,42 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
+  // function save(name, interviewer) {
+  //   const interview = {
+  //     student: name,
+  //     interviewer
+  //   };
+  //   transition(SAVING);
+  //   const saving = props.bookInterview(props.id, interview);
+  //   if (saving === undefined) {
+  //     setTimeout(() => {
+  //       transition(SHOW);
+  //     }, 1000);
+  //   } else {
+  //     transition(ERROR_SAVE, true);
+  //   }
+  // }
+
   function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
+
     transition(SAVING);
-    const saving = props.bookInterview(props.id, interview);
-    if (saving === undefined) {
-      setTimeout(() => {
-        transition(SHOW);
-      }, 1000);
-    }
+
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch(error => transition(ERROR_SAVE, true));
   }
 
-  function deleteAppointment() {
-    transition(DELETING);
-    const deleting = props.cancelInterview(props.id);
-    if (deleting === undefined) {
-      setTimeout(() => {
-        transition(EMPTY);
-      }, 1000);
-    }
+  function deleteAppointment(event) {
+    transition(DELETING, true);
+    props
+      .cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch(error => transition(ERROR_DELETE, true));
   }
 
   return (
@@ -71,8 +86,12 @@ export default function Appointment(props) {
           onCancel={back}
         />
       )}
-      {mode === ERROR && <Error message="Could not delete." onClose={back} />}
-      {mode === ERROR && <Error message="Could not save." onClose={back} />}
+      {mode === ERROR_DELETE && (
+        <Error message="Could not delete." onClose={back} />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error message="Could not save." onClose={back} />
+      )}
     </article>
   );
 }

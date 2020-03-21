@@ -59,10 +59,10 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    axios
+    return axios
       .put(`http://localhost:8001/api/appointments/${id}`, appointment)
-      .then(setState({ ...state, appointments }))
-      .catch(err => console.error(err));
+      .then(setState({ ...state, appointments }));
+    // .catch(err => console.error(err));
   }
 
   const interviewers = getInterviewersForDay(state, state.day);
