@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "components/Appointment/styles.scss";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment/index";
@@ -33,6 +34,37 @@ export default function Application(props) {
     });
   }, []);
 
+  function cancelInterview(id, interview) {
+    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    axios
+      .delete(`/api/appointments/${id}`, appointment)
+      .then(setState({ ...state, appointments }))
+      .catch(err => console.error(err));
+  }
+
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    axios
+      .put(`http://localhost:8001/api/appointments/${id}`, appointment)
+      .then(setState({ ...state, appointments }))
+      .catch(err => console.error(err));
+  }
+
   const interviewers = getInterviewersForDay(state, state.day);
   const appointments = getAppointmentsForDay(state, state.day);
   const schedule = appointments.map(appointment => {
@@ -44,7 +76,9 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
-        interviewer={interviewers}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
         // interviewers={state.interviewers}
       />
     );
