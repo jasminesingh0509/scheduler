@@ -1,5 +1,6 @@
 import React from "react";
 
+//-----------------------renders in the index.js------------------
 export default function Empty(props) {
   return (
     <main className="appointment__add">
