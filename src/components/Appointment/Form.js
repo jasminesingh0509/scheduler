@@ -20,9 +20,9 @@ export default function Form(props) {
     props.onCancel();
   }
 
-  function save() {
-    props.onSave(name, interviewer);
-  }
+  // function save() {
+  //   props.onSave(name, interviewer);
+  // }
 
   function validate() {
     if (name === "") {
@@ -30,6 +30,7 @@ export default function Form(props) {
       return;
     }
 
+    setError("");
     props.onSave(name, interviewer);
   }
 
