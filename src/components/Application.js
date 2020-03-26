@@ -47,7 +47,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={state.days} setDay={setDay} />
+          <DayList days={state.days} setDay={setDay} day={state.day} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -55,7 +55,10 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">{schedule}</section>
+      <section className="schedule">
+        {schedule}
+        <Appointment time={"5pm"} />
+      </section>
     </main>
   );
 }
