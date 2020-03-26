@@ -3,7 +3,6 @@ import DayListItem from "./DayListItem";
 //------------------renders in the application.js------
 
 export default function DayList(props) {
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>", props);
   return (
     <ul data-testid="day">
       {props.days.map(day => (
@@ -12,7 +11,6 @@ export default function DayList(props) {
           name={day.name}
           spots={day.spots}
           selected={props.day === day.name}
-          // selected={day.name === "Tuesday"}
           setDay={props.setDay}
           data-testid="day"
         />
