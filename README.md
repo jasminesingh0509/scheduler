@@ -21,3 +21,11 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Versioning
+
+1.0.0
+
+## Authors
+
+Jasmine Singh - Lighthouse Labs, 2020
