@@ -29,3 +29,5 @@ npm run storybook
 ## Authors
 
 Jasmine Singh - Lighthouse Labs, 2020
+
+Main Page !["Main page of to Add an appointment!"](https://github.com/jasminesingh0509/scheduler/blob/master/docs/Mainpage.png?raw=true)
