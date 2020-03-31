@@ -31,7 +31,6 @@ export default function useApplicationData() {
 
   //--------------cancelInterview function uses promises------------------
   function cancelInterview(id, interview) {
-    console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
