@@ -31,6 +31,7 @@ export default function useApplicationData() {
 
   //--------------cancelInterview function uses promises------------------
   function cancelInterview(id, interview) {
+    console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -39,6 +40,7 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
+
     return axios
       .delete(`/api/appointments/${id}`, appointment)
       .then(setState({ ...state, appointments }));

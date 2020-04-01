@@ -17,6 +17,7 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
@@ -40,11 +41,12 @@ export default function Appointment(props) {
   function deleteAppointment(event) {
     transition(DELETING, true);
     props
-      .cancelInterview(props.id)
+      .cancelInterview(props.id, props.interview)
       .then(() => transition(EMPTY))
       .catch(error => transition(ERROR_DELETE, true));
   }
   //-----------------------Appointment return--------------------------
+
   return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
@@ -73,6 +75,15 @@ export default function Appointment(props) {
           message={"Delete the appointment?"}
           onConfirm={deleteAppointment}
           onCancel={back}
+        />
+      )}
+      {mode === EDIT && (
+        <Form
+          name={props.interview.student}
+          interviewer={props.interview.interviewer.id}
+          interviewers={props.interviewers}
+          onSave={save}
+          onCancel={() => back()}
         />
       )}
       {mode === ERROR_DELETE && (
