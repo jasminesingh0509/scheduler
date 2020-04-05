@@ -4,13 +4,13 @@ import axios from "axios";
 
 //----------------imported to Application.js-------------------------
 export default function useApplicationData() {
-  const setDay = day => setState(prev => ({ ...prev, day }));
+  const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers: {}
+    interviewers: {},
   });
 
   //-------------------GET request with promises-------------------------
@@ -18,13 +18,13 @@ export default function useApplicationData() {
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
-      axios.get("/api/interviewers")
-    ]).then(all => {
-      setState(state => ({
+      axios.get("/api/interviewers"),
+    ]).then((all) => {
+      setState((state) => ({
         ...state,
         days: all[0].data,
         appointments: all[1].data,
-        interviewers: all[2].data
+        interviewers: all[2].data,
       }));
     });
   }, []);
@@ -33,36 +33,36 @@ export default function useApplicationData() {
   function cancelInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: { ...interview },
     };
     const appointments = {
       ...state.appointments,
-      [id]: appointment
+      [id]: appointment,
     };
 
     return axios
       .delete(`/api/appointments/${id}`, appointment)
-      .then(setState({ ...state, appointments }));
+      .then(() => setState({ ...state, appointments }));
   }
   //--------------bookInterview function uses promises------------------
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: { ...interview },
     };
     const appointments = {
       ...state.appointments,
-      [id]: appointment
+      [id]: appointment,
     };
     return axios
       .put(`http://localhost:8001/api/appointments/${id}`, appointment)
-      .then(setState({ ...state, appointments }));
+      .then(() => setState({ ...state, appointments }));
   }
   //------------------Change remaining days-----------------------------
   useEffect(() => {
     axios
       .get("/api/days")
-      .then(days => setState(state => ({ ...state, days: days.data })));
+      .then((days) => setState((state) => ({ ...state, days: days.data })));
   }, [state.appointments]);
 
   return { state, setDay, bookInterview, cancelInterview };
