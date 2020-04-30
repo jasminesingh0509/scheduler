@@ -1,5 +1,9 @@
 # Interview Scheduler
 
+## Description
+
+Scheduling tool for students/mentors using React
+
 ## Setup
 
 Install dependencies with `npm install`.
